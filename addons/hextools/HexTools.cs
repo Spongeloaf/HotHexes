@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GdCore;
-using HotHexes.addons.hextools;
 
-namespace HotHexes.addons.HexTools;
+namespace HotHexes;
 
 public enum HexOrientation
 {
@@ -62,24 +61,20 @@ public static class HexTools
         return result;
     }
 
+    public static Hexagon2D BuildHexagon2D(float circumradius)
+    {
+        Hexagon2D result = new Hexagon2D();
+        result.Vertices = BuildHexVertices(circumradius, HexOrientation.FlatTop);
+        return result;
+    }
+
     public static Polygon2D[] GenerateHexGrid(Node parent, HexGridParameters hexParams)
     {
         if (hexParams.HexOrientation == HexOrientation.PointyTop)
             throw new NotImplementedException("Only flat top hexes supported right now");
 
         List<Polygon2D> hexagons = new List<Polygon2D>();
-
-        // Calculate hexagon vertices for flat-top orientation
-        Vector2[] hexVertices = new Vector2[6];
-        for (int i = 0; i < 6; i++)
-        {
-            float angle = Mathf.DegToRad(60 * i); // Rotate by 30 degrees for flat-top
-            hexVertices[i] = new Vector2(
-                hexParams.Circumradius * Mathf.Cos(angle),
-                hexParams.Circumradius * Mathf.Sin(angle)
-            );
-        }
-
+        Vector2[] hexVertices = BuildHexVertices(hexParams.Circumradius, hexParams.HexOrientation);
         float horizontalSpacing = 1.5f * hexParams.Circumradius;
         float verticalSpacing = MathF.Sqrt(3) * hexParams.Circumradius;
         for (int x = 0; x < hexParams.GridWidth; x++)
@@ -106,4 +101,28 @@ public static class HexTools
 
         return hexagons.ToArray();
     }
+
+    /// <summary>
+    /// Creates an array of six points in a hexagonal shape, centered around 0,0.
+    /// </summary>
+    /// <param name="circumradius"></param>
+    /// <returns></returns>
+    public static Vector2[] BuildHexVertices(float circumradius, HexOrientation orientation)
+    {
+        // Rotate by 30 degrees for pointy-top
+        float rotation = orientation == HexOrientation.FlatTop ? 0 : 30;
+        Vector2[] hexVertices = new Vector2[6];
+        
+        for (int i = 0; i < 6; i++)
+        {
+            float angle = Mathf.DegToRad(60 * i + rotation); 
+            hexVertices[i] = new Vector2(
+                circumradius * Mathf.Cos(angle),
+                circumradius * Mathf.Sin(angle)
+            );
+        }
+
+        return hexVertices;
+    }
+
 }

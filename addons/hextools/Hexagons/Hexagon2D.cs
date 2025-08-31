@@ -1,10 +1,10 @@
-
-namespace HotHexes.addons.hextools;
+namespace HotHexes;
 
 /// <summary>
 /// Wraps around a base Hexagon class with drawing and node functionality.
 /// </summary>
 [Tool]
+[GlobalClass]
 public partial class Hexagon2D : Node2D
 {
     //////////////////////////////////////////////////////////
@@ -22,6 +22,12 @@ public partial class Hexagon2D : Node2D
         get => hexagon.Vertices;
         set => hexagon.Vertices = value;
     }
+
+    public Hexagon2D()
+    {
+        int i = 0;
+    }
+
 
     public override void _Draw()
     {

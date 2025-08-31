@@ -1,6 +1,4 @@
-using GdCore;
-using HotHexes.addons.HexTools;
-using GdCore.Extensions;
+using HotHexes;
 
 #if TOOLS
 

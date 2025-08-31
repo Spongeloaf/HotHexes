@@ -1,7 +1,5 @@
-using Godot;
-using System;
 using GdCore;
-using HotHexes.addons.HexTools;
+using HotHexes;
 
 public partial class HexRunner : Node2D
 {
@@ -9,12 +7,14 @@ public partial class HexRunner : Node2D
 
     public override void _Ready()
     {
-        HexTools.GenerateHexGrid(this, new HexGridParameters());
+        var child = new HexagonComboTile();
+        AddChild(child);
+        
 
         PackedScene packedScene = new PackedScene();
 
         // Pack the scene (the node and its children)
-        Error error = packedScene.Pack(this);
+        Error error = packedScene.Pack(child);
         if (error != Error.Ok)
         {
             GD.PrintErr($"Failed to pack scene: {error}");

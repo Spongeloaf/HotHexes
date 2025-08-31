@@ -1,4 +1,4 @@
-namespace HotHexes.addons.hextools;
+namespace HotHexes;
 
 public class Hexagon
 {
