@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxkjk0cdxckxf"]
+
+[ext_resource type="Script" uid="uid://hdtg2ycb5dso" path="res://HexRunner.cs" id="1_e1hb4"]
+
+[node name="HexRunner" type="Node2D"]
+script = ExtResource("1_e1hb4")
